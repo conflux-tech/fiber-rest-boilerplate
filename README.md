@@ -34,6 +34,15 @@ Models can be located in `/app/models` directory.
 
 Providers (custom helpers) can be found in `/app/providers`.
 
+## Docker
+
+You can run the application using Docker. To build and run the Docker image, you can use the following commands:
+
+```bash
+docker build -t fiber-rest-boilerplate .
+docker run --name fiber-rest-boilerplate -p 3000:3000 fiber-reset-boilerplate
+```
+
 ## Live Reloading
 
 We used [Air](https://github.com/cosmtrek/air) to enable live reloading during development. This allows you to live reload your Go application when you make some changes on your Go files.

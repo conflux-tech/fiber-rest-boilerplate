@@ -10,6 +10,14 @@ To run the application locally, simply run the following command:
 make dev
 ```
 
+or
+
+```bash
+make watch
+```
+
+for live reloading
+
 ## Configurations
 
 All configuration for the application such as HTTP Port, Database connection, etc. are set through environment variables. For development purpose, these environment variables can be set in a `.env` file. A sample environment variables can be found in `.env.example` file.

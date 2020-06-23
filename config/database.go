@@ -1,6 +1,8 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"github.com/spf13/viper"
+)
 
 // DBConfig is the database configuration definition
 type DBConfig struct {
@@ -11,6 +13,7 @@ type DBConfig struct {
 	User		string
 	Password	string
 	Database	string
+	SSLMode		string
 }
 
 func loadDBConfig() (config DBConfig, err error) {
@@ -25,10 +28,12 @@ func loadDBConfig() (config DBConfig, err error) {
 }
 
 func setDefaultDBConfig(provider *viper.Viper) {
-	provider.SetDefault("Enabled", false)
+	provider.SetDefault("Enabled", true)
 	provider.SetDefault("Driver", "pg")
 	provider.SetDefault("Host", "localhost")
 	provider.SetDefault("Port", 5432)
 	provider.SetDefault("User", "postgres")
 	provider.SetDefault("Database", "postgres")
+	provider.SetDefault("Password", "")
+	provider.SetDefault("SSLMode", "disable")
 }

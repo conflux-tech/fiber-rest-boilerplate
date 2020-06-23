@@ -18,4 +18,8 @@ func registerRoot(route *fiber.Group) {
 func registerUsers(route *fiber.Group) {
 	users := route.Group("/users")
 	users.Get("/", handlers.GetAllUsers)
+	users.Get("/:id", handlers.GetUser)
+	users.Post("/", handlers.AddUser)
+	users.Patch("/:id", handlers.UpdateUser)
+	users.Delete("/:id", handlers.DeleteUser)
 }

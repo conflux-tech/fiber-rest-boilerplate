@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/conflux-tech/fiber-rest-boilerplate/app/providers"
 	"github.com/conflux-tech/fiber-rest-boilerplate/config"
+	"github.com/conflux-tech/fiber-rest-boilerplate/database"
 	"github.com/conflux-tech/fiber-rest-boilerplate/routes"
 	"github.com/gofiber/fiber"
 	"github.com/gofiber/fiber/middleware"
@@ -17,6 +18,12 @@ func main() {
 	app.Use(middleware.Recover())
 	app.Use(middleware.Compress())
 	app.Use(middleware.RequestID())
+
+	if conf.Database.Enabled {
+		database.Connect(&conf.Database)
+	}
+
+	database.Instance().AutoMigrate()
 
 	routes.RegisterRoutes(app.Group("/"))
 

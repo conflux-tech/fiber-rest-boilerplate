@@ -27,18 +27,22 @@ All configuration for the application such as HTTP Port, Database connection, et
 
 ## Routes
 
-Routes examples can be found in `/api/routes/routes.go` file.
+Routes examples can be found in `./routes/routes.go` file.
 
 ## Handlers
 
-Example handlers can be found in `/api/handlers` directory.
+Example handlers can be found in `./handlers` directory.
 
-## Models
+## Domain Specifics
 
-Models can be located in `/api/models` directory. We use [GORM](https://gorm.io/) as an ORM to provide useful features to your models.
+Domains specifics have their own directories. In this example, we have a `users` domain that can be find in `./users` directory.
+
+It may consist of the model defitinition, repositories for different datastores, and usecases if needed.
+
+For relation databases, we use [GORM](https://gorm.io/) as an ORM to provide useful features to your models.
 
 ## Database Migration
 
 We use [Goose](https://github.com/pressly/goose) as a database migration tool. Run `./scripts/migration` for more information.
 
-Sample migration files can be found in `/database/migrations`.
+Sample migration files can be found in `./database/migrations`.

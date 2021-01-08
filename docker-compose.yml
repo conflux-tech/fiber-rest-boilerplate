@@ -1,0 +1,40 @@
+version: '3.8'
+
+networks:
+  web:
+    external: true
+
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    container_name: fiber_rest_api
+    depends_on:
+      - postgres
+    working_dir: /app
+    environment:
+      - APP_ENV=development
+      - APP_PORT=:3000
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_DATABASE=fiber_rest
+    volumes:
+      - ./:/app
+    ports:
+      - '3000:3000'
+    networks:
+      - web
+
+  postgres:
+    image: postgres:alpine
+    container_name: fiber_rest_pg
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fiber_rest
+    networks:
+      - web

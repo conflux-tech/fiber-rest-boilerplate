@@ -1,33 +1,36 @@
 package main
 
 import (
-	"github.com/conflux-tech/fiber-rest-boilerplate/app/providers"
-	"github.com/conflux-tech/fiber-rest-boilerplate/config"
+	"github.com/conflux-tech/fiber-rest-boilerplate/configs"
 	"github.com/conflux-tech/fiber-rest-boilerplate/database"
 	"github.com/conflux-tech/fiber-rest-boilerplate/routes"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/fiber/middleware"
+	"github.com/conflux-tech/fiber-rest-boilerplate/users"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
 func main() {
-	conf, _ := config.LoadConfigs()
+	conf, _ := configs.Load()
 
 	app := fiber.New()
 
-	app.Use(middleware.Logger())
-	app.Use(middleware.Recover())
-	app.Use(middleware.Compress())
-	app.Use(middleware.RequestID())
+	app.Use(recover.New())
+	app.Use(logger.New())
+	app.Use(compress.New())
+	app.Use(requestid.New())
 
 	if conf.Database.Enabled {
 		database.Connect(&conf.Database)
+		defer database.Close()
 	}
 
-	database.Instance().AutoMigrate()
+	userPGRepo := users.NewPGRepo(database.Instance())
 
-	routes.RegisterRoutes(app.Group("/"))
-
-	providers.SetConfig(&conf)
+	routes.RegisterRoot(app.Group("/"))
+	routes.RegisterUsers(app.Group("/users"), userPGRepo)
 
 	app.Listen(conf.Application.Port)
 }

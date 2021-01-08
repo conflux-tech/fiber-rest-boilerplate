@@ -1,16 +1,12 @@
-FROM golang:1.14 as build
+FROM golang:1.14-alpine
 
-WORKDIR /go/src/build
-COPY . .
-RUN mkdir build
-RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o ./build ./main.go
+RUN apk update && apk add curl \
+build-base \
+git \
+make
 
-FROM alpine:latest
+WORKDIR /app
 
-WORKDIR /go/src/deploy
-COPY --from=build /go/src/build .
-RUN chmod +x ./build/main
+COPY ./ /app
 
-EXPOSE 3000
-
-CMD ["./build/main"]
+RUN go build -o ./bin/fiber-rest-boilerplate ./

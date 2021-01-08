@@ -2,55 +2,43 @@
 
 A boilerplate for creating REST APIs using [Fiber](https://gofiber.io/)
 
-## Running the application
-
-To run the application locally, simply run the following command:
+## Running locally
 
 ```bash
-make dev
+> docker-compose up
+
+# ...
+
+fiber_rest_api | running...
+fiber_rest_api |
+fiber_rest_api |  ┌───────────────────────────────────────────────────┐
+fiber_rest_api |  │                    Fiber v2.3.2                   │
+fiber_rest_api |  │               http://127.0.0.1:3000               │
+fiber_rest_api |  │                                                   │
+fiber_rest_api |  │ Handlers ............ 13  Processes ........... 1 │
+fiber_rest_api |  │ Prefork ....... Disabled  PID ............... 149 │
+fiber_rest_api |  └───────────────────────────────────────────────────┘
+fiber_rest_api |
 ```
-
-or
-
-```bash
-make watch
-```
-
-for live reloading
 
 ## Configurations
 
 All configuration for the application such as HTTP Port, Database connection, etc. are set through environment variables. For development purpose, these environment variables can be set in a `.env` file. A sample environment variables can be found in `.env.example` file.
 
-## Routing
+## Routes
 
-Routing examples can be found in `/routes/route.go` file.
+Routes examples can be found in `/api/routes/routes.go` file.
 
 ## Handlers
 
-Example handlers can be found in `/app/handlers` directory.
-
-## Database
-
-We use GORM as an ORM to provide useful features to your models.
+Example handlers can be found in `/api/handlers` directory.
 
 ## Models
 
-Models can be located in `/app/models` directory.
+Models can be located in `/api/models` directory. We use [GORM](https://gorm.io/) as an ORM to provide useful features to your models.
 
-## Providers
+## Database Migration
 
-Providers (custom helpers) can be found in `/app/providers`.
+We use [Goose](https://github.com/pressly/goose) as a database migration tool. Run `./scripts/migration` for more information.
 
-## Docker
-
-You can run the application using Docker. To build and run the Docker image, you can use the following commands:
-
-```bash
-docker build -t fiber-rest-boilerplate .
-docker run --name fiber-rest-boilerplate -p 3000:3000 fiber-reset-boilerplate
-```
-
-## Live Reloading
-
-We used [Air](https://github.com/cosmtrek/air) to enable live reloading during development. This allows you to live reload your Go application when you make some changes on your Go files.
+Sample migration files can be found in `/database/migrations`.

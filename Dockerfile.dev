@@ -1,0 +1,10 @@
+FROM golang:1.14-alpine
+
+RUN apk update && apk add curl \
+build-base \
+git \
+make
+
+RUN go get -u github.com/cosmtrek/air
+
+CMD [ "make", "dev" ]

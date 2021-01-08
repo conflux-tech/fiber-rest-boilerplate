@@ -101,7 +101,6 @@ func UpdateUser(pgRepo users.Repository) fiber.Handler {
 	}
 }
 
-
 // DeleteUser deletes a use
 func DeleteUser(pgRepo users.Repository) fiber.Handler {
 	return func(c *fiber.Ctx) error {
@@ -116,9 +115,8 @@ func DeleteUser(pgRepo users.Repository) fiber.Handler {
 			})
 		}
 		return c.JSON(fiber.Map{
-			"id":     id,
+			"id":      id,
 			"deleted": res,
 		})
 	}
 }
-
